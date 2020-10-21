@@ -1,8 +1,12 @@
 {
   "name": "phaser-undertale-battle",
   "version": "1.0.0",
-  "description": "Re-create Undertale battle system using PhaserJS",
+  "description": "Use PhaserJS to re-create the Undertale battle system",
   "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "parcel": "^1.12.4"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,13 +14,10 @@
     "type": "git",
     "url": "git+https://github.com/DewaldoDev/phaser-undertale-battle.git"
   },
-  "author": "Tyler Dewald",
+  "author": "DewaldoDev",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/DewaldoDev/phaser-undertale-battle/issues"
   },
-  "homepage": "https://github.com/DewaldoDev/phaser-undertale-battle#readme",
-  "dependencies": {
-    "parcel": "^1.12.4"
-  }
+  "homepage": "https://github.com/DewaldoDev/phaser-undertale-battle#readme"
 }
