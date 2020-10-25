@@ -13,21 +13,35 @@ var config = {
   scene: {
     preload: preload,
     create: create,
+    update: update,
   },
 };
 
 var game = new Phaser.Game(config);
+var heart;
 
 function preload() {
   this.load.image("heart", "https://64.media.tumblr.com/avatar_6a16f384117d_128.pnj");
 }
 
 function create() {
-  const heart = this.add.sprite(400, 300, "heart");
+  heart = this.add.sprite(400, 300, "heart");
   heart.displayHeight = 20;
   heart.displayWidth = 20;
 }
 
 function update() {
-  console.log("Hi");
+  const cursorKeys = this.input.keyboard.createCursorKeys();
+  if (cursorKeys.up.isDown) {
+    heart.y -= 4;
+  }  
+  if (cursorKeys.down.isDown) {
+    heart.y += 4;
+  }
+  if (cursorKeys.right.isDown) {
+    heart.x += 4;
+  }
+  if (cursorKeys.left.isDown) {
+    heart.x -= 4;
+  }
 }
