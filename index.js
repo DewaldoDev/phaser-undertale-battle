@@ -23,5 +23,6 @@ function preload() {
 }
 
 function create() {
-  this.add.sprite(400, 300, "heart");
+  const heart = this.add.sprite(400, 300, "heart");
+  heart.displayHeight = 20;
 }
