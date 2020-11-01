@@ -28,20 +28,21 @@ function create() {
   this.heart.displayHeight = 20;
   this.heart.displayWidth = 20;
 
-  this.keys = this.input.keyboard.createCursorKeys();
+  this.input.keyboard.on('keydown-W', function() {
+    this.heart.y -= 4;
+  }, this);
+
+  this.input.keyboard.on('keydown-A', function() {
+    this.heart.x -= 4;
+  }, this);
+
+  this.input.keyboard.on('keydown-S', function() {
+    this.heart.y += 4;
+  }, this);
+
+  this.input.keyboard.on('keydown-D', function() {
+    this.heart.x += 4;
+  }, this);
 }
 
-function update() {
-  if (this.keys.up.isDown) {
-    this.heart.y -= 4;
-  }  
-  if (this.keys.down.isDown) {
-    this.heart.y += 4;
-  }
-  if (this.keys.right.isDown) {
-    this.heart.x += 4;
-  }
-  if (this.keys.left.isDown) {
-    this.heart.x -= 4;
-  }
-}
+function update() {}
