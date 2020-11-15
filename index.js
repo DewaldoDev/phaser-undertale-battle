@@ -7,7 +7,7 @@ var config = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 200 },
+      debug: true
     },
   },
   scene: {
@@ -18,30 +18,31 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
-var heart;
 
 function preload() {
   this.load.image("heart", "https://64.media.tumblr.com/avatar_6a16f384117d_128.pnj");
 }
 
 function create() {
-  heart = this.add.sprite(400, 300, "heart");
-  heart.displayHeight = 20;
-  heart.displayWidth = 20;
+  this.heart = this.physics.add.image(400, 300, "heart");
+  this.heart.displayHeight = 20;
+  this.heart.displayWidth = 20;
+  this.heart.setCollideWorldBounds(true);
+
+  this.cursorKeys = this.input.keyboard.createCursorKeys();
 }
 
 function update() {
-  const cursorKeys = this.input.keyboard.createCursorKeys();
-  if (cursorKeys.up.isDown) {
-    heart.y -= 4;
-  }  
-  if (cursorKeys.down.isDown) {
-    heart.y += 4;
+  this.heart.setVelocity(0);
+
+  if (this.cursorKeys.up.isDown) {
+    this.heart.setVelocityY(-200);
+  } else if (this.cursorKeys.down.isDown) {
+    this.heart.setVelocityY(200);
   }
-  if (cursorKeys.right.isDown) {
-    heart.x += 4;
-  }
-  if (cursorKeys.left.isDown) {
-    heart.x -= 4;
+  if (this.cursorKeys.right.isDown) {
+    this.heart.setVelocityX(200);
+  } else if (this.cursorKeys.left.isDown) {
+    this.heart.setVelocityX(-200);
   }
 }
