@@ -18,31 +18,30 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
+var heart;
 
 function preload() {
   this.load.image("heart", "https://64.media.tumblr.com/avatar_6a16f384117d_128.pnj");
 }
 
 function create() {
-  this.heart = this.add.sprite(400, 300, "heart");
-  this.heart.displayHeight = 20;
-  this.heart.displayWidth = 20;
-
-  this.input.keyboard.on('keydown-W', function() {
-    this.heart.y -= 4;
-  }, this);
-
-  this.input.keyboard.on('keydown-A', function() {
-    this.heart.x -= 4;
-  }, this);
-
-  this.input.keyboard.on('keydown-S', function() {
-    this.heart.y += 4;
-  }, this);
-
-  this.input.keyboard.on('keydown-D', function() {
-    this.heart.x += 4;
-  }, this);
+  heart = this.add.sprite(400, 300, "heart");
+  heart.displayHeight = 20;
+  heart.displayWidth = 20;
 }
 
-function update() {}
+function update() {
+  const cursorKeys = this.input.keyboard.createCursorKeys();
+  if (cursorKeys.up.isDown) {
+    heart.y -= 4;
+  }  
+  if (cursorKeys.down.isDown) {
+    heart.y += 4;
+  }
+  if (cursorKeys.right.isDown) {
+    heart.x += 4;
+  }
+  if (cursorKeys.left.isDown) {
+    heart.x -= 4;
+  }
+}
