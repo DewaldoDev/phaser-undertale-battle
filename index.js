@@ -29,6 +29,9 @@ function create() {
   this.heart.displayWidth = 20;
   this.heart.setCollideWorldBounds(true);
 
+  this.battleBounds = this.add.rectangle(400, 300, 250, 250);
+  this.battleBounds.setStrokeStyle(5, 0xFFFFFF);
+
   this.cursorKeys = this.input.keyboard.createCursorKeys();
 }
 
