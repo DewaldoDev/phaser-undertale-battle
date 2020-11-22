@@ -7,7 +7,7 @@ var config = {
   physics: {
     default: "arcade",
     arcade: {
-      debug: true
+      debug: true,
     },
   },
   scene: {
@@ -20,7 +20,10 @@ var config = {
 var game = new Phaser.Game(config);
 
 function preload() {
-  this.load.image("heart", "https://64.media.tumblr.com/avatar_6a16f384117d_128.pnj");
+  this.load.image(
+    "heart",
+    "https://64.media.tumblr.com/avatar_6a16f384117d_128.pnj"
+  );
 }
 
 function create() {
@@ -31,10 +34,24 @@ function create() {
 
   const battleBounds = this.physics.add.staticGroup();
   const battleBox = this.add.rectangle(400, 300, 250, 250);
-  battleBox.setStrokeStyle(5, 0xFFFFFF);
+  battleBox.setStrokeStyle(5, 0xffffff);
   battleBounds.add(battleBox);
 
-  this.physics.add.collider(this.heart, battleBounds);
+  const battleBoxCallback = (heart, box) => {
+    const touchingRight =
+      heart.x + heart.displayWidth / 2 >= box.x + box.width / 2;
+    const touchingLeft =
+      heart.x - heart.displayWidth / 2 <= box.x - box.width / 2;
+    const touchingBottom =
+      heart.y + heart.displayHeight / 2 >= box.y + box.height / 2;
+    const touchingTop =
+      heart.y - heart.displayHeight / 2 <= box.y - box.height / 2;
+
+    if (touchingRight || touchingLeft || touchingTop || touchingBottom) {
+      console.log({ touchingRight, touchingLeft, touchingTop, touchingBottom });
+    }
+  };
+  this.physics.add.collider(this.heart, battleBounds, battleBoxCallback);
 
   this.cursorKeys = this.input.keyboard.createCursorKeys();
 }
