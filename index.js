@@ -38,18 +38,14 @@ function create() {
   battleBounds.add(battleBox);
 
   const battleBoxCallback = (heart, box) => {
-    const touchingRight =
+    this.touchingRight =
       heart.x + heart.displayWidth / 2 >= box.x + box.width / 2;
-    const touchingLeft =
+    this.touchingLeft =
       heart.x - heart.displayWidth / 2 <= box.x - box.width / 2;
-    const touchingBottom =
+    this.touchingBottom =
       heart.y + heart.displayHeight / 2 >= box.y + box.height / 2;
-    const touchingTop =
+    this.touchingTop =
       heart.y - heart.displayHeight / 2 <= box.y - box.height / 2;
-
-    if (touchingRight || touchingLeft || touchingTop || touchingBottom) {
-      console.log({ touchingRight, touchingLeft, touchingTop, touchingBottom });
-    }
   };
   this.physics.add.collider(this.heart, battleBounds, battleBoxCallback);
 
@@ -59,14 +55,14 @@ function create() {
 function update() {
   this.heart.setVelocity(0);
 
-  if (this.cursorKeys.up.isDown) {
-    this.heart.setVelocityY(-200);
-  } else if (this.cursorKeys.down.isDown) {
-    this.heart.setVelocityY(200);
+  if (this.cursorKeys.up.isDown && !this.touchingTop) {
+    this.heart.setVelocityY(-100);
+  } else if (this.cursorKeys.down.isDown && !this.touchingBottom) {
+    this.heart.setVelocityY(100);
   }
-  if (this.cursorKeys.right.isDown) {
-    this.heart.setVelocityX(200);
-  } else if (this.cursorKeys.left.isDown) {
-    this.heart.setVelocityX(-200);
+  if (this.cursorKeys.right.isDown && !this.touchingRight) {
+    this.heart.setVelocityX(100);
+  } else if (this.cursorKeys.left.isDown && !this.touchingLeft) {
+    this.heart.setVelocityX(-100);
   }
 }
