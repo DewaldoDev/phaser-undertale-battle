@@ -33,21 +33,11 @@ function create() {
   this.heart.setCollideWorldBounds(true);
 
   const battleBounds = this.physics.add.staticGroup();
-  const battleBox = this.add.rectangle(400, 300, 250, 250);
-  battleBox.setStrokeStyle(5, 0xffffff);
-  battleBounds.add(battleBox);
+  this.battleBox = this.add.rectangle(400, 300, 250, 250);
+  this.battleBox.setStrokeStyle(5, 0xffffff);
+  battleBounds.add(this.battleBox);
 
-  const battleBoxCallback = (heart, box) => {
-    this.touchingRight =
-      heart.x + heart.displayWidth / 2 >= box.x + box.width / 2;
-    this.touchingLeft =
-      heart.x - heart.displayWidth / 2 <= box.x - box.width / 2;
-    this.touchingBottom =
-      heart.y + heart.displayHeight / 2 >= box.y + box.height / 2;
-    this.touchingTop =
-      heart.y - heart.displayHeight / 2 <= box.y - box.height / 2;
-  };
-  this.physics.add.collider(this.heart, battleBounds, battleBoxCallback);
+  this.physics.add.collider(this.heart, battleBounds);
 
   this.cursorKeys = this.input.keyboard.createCursorKeys();
 }
@@ -55,14 +45,27 @@ function create() {
 function update() {
   this.heart.setVelocity(0);
 
-  if (this.cursorKeys.up.isDown && !this.touchingTop) {
+  const touchingRight =
+    this.heart.x + this.heart.displayWidth / 2 >=
+    this.battleBox.x + this.battleBox.width / 2;
+  const touchingLeft =
+    this.heart.x - this.heart.displayWidth / 2 <=
+    this.battleBox.x - this.battleBox.width / 2;
+  const touchingBottom =
+    this.heart.y + this.heart.displayHeight / 2 >=
+    this.battleBox.y + this.battleBox.height / 2;
+  const touchingTop =
+    this.heart.y - this.heart.displayHeight / 2 <=
+    this.battleBox.y - this.battleBox.height / 2;
+
+  if (this.cursorKeys.up.isDown && !touchingTop) {
     this.heart.setVelocityY(-100);
-  } else if (this.cursorKeys.down.isDown && !this.touchingBottom) {
+  } else if (this.cursorKeys.down.isDown && !touchingBottom) {
     this.heart.setVelocityY(100);
   }
-  if (this.cursorKeys.right.isDown && !this.touchingRight) {
+  if (this.cursorKeys.right.isDown && !touchingRight) {
     this.heart.setVelocityX(100);
-  } else if (this.cursorKeys.left.isDown && !this.touchingLeft) {
+  } else if (this.cursorKeys.left.isDown && !touchingLeft) {
     this.heart.setVelocityX(-100);
   }
 }
