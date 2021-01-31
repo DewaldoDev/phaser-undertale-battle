@@ -1,4 +1,6 @@
 import Phaser from "phaser";
+import heartImg from "./assets/heart.png";
+import starImg from "./assets/star.png";
 
 var config = {
   type: Phaser.AUTO,
@@ -20,10 +22,9 @@ var config = {
 var game = new Phaser.Game(config);
 
 function preload() {
-  this.load.image(
-    "heart",
-    "https://64.media.tumblr.com/avatar_6a16f384117d_128.pnj"
-  );
+  this.load.image("heart", heartImg);
+
+  this.load.image("star", starImg);
 }
 
 function create() {
@@ -38,6 +39,8 @@ function create() {
   battleBounds.add(this.battleBox);
 
   this.physics.add.collider(this.heart, battleBounds);
+
+  this.star = this.physics.add.image(100, 100, "star");
 
   this.cursorKeys = this.input.keyboard.createCursorKeys();
 }
