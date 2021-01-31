@@ -28,18 +28,20 @@ function preload() {
 }
 
 function create() {
+  // Create boundry for heart to collide with
+  const battleBounds = new Phaser.Geom.Rectangle(275, 175, 250, 250);
+  this.add.graphics().lineStyle(5, 0xffffff).strokeRectShape(battleBounds);
+
+  // Poisition and resize heart sprite
   this.heart = this.physics.add.image(400, 300, "heart");
   this.heart.displayHeight = 20;
   this.heart.displayWidth = 20;
   this.heart.setCollideWorldBounds(true);
 
-  const battleBounds = this.physics.add.staticGroup();
-  this.battleBox = this.add.rectangle(400, 300, 250, 250);
-  this.battleBox.setStrokeStyle(5, 0xffffff);
-  battleBounds.add(this.battleBox);
+  // See example: https://www.phaser.io/examples/v3/view/physics/arcade/custom-bounds
+  this.heart.body.setBoundsRectangle(battleBounds);
 
-  this.physics.add.collider(this.heart, battleBounds);
-
+  // Create the star sprite
   this.star = this.physics.add.image(100, 100, "star");
 
   this.cursorKeys = this.input.keyboard.createCursorKeys();
@@ -48,27 +50,14 @@ function create() {
 function update() {
   this.heart.setVelocity(0);
 
-  const touchingRight =
-    this.heart.x + this.heart.displayWidth / 2 >=
-    this.battleBox.x + this.battleBox.width / 2;
-  const touchingLeft =
-    this.heart.x - this.heart.displayWidth / 2 <=
-    this.battleBox.x - this.battleBox.width / 2;
-  const touchingBottom =
-    this.heart.y + this.heart.displayHeight / 2 >=
-    this.battleBox.y + this.battleBox.height / 2;
-  const touchingTop =
-    this.heart.y - this.heart.displayHeight / 2 <=
-    this.battleBox.y - this.battleBox.height / 2;
-
-  if (this.cursorKeys.up.isDown && !touchingTop) {
+  if (this.cursorKeys.up.isDown) {
     this.heart.setVelocityY(-100);
-  } else if (this.cursorKeys.down.isDown && !touchingBottom) {
+  } else if (this.cursorKeys.down.isDown) {
     this.heart.setVelocityY(100);
   }
-  if (this.cursorKeys.right.isDown && !touchingRight) {
+  if (this.cursorKeys.right.isDown) {
     this.heart.setVelocityX(100);
-  } else if (this.cursorKeys.left.isDown && !touchingLeft) {
+  } else if (this.cursorKeys.left.isDown) {
     this.heart.setVelocityX(-100);
   }
 }
